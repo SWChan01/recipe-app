@@ -1,6 +1,8 @@
 import React ,{useState,useEffect} from 'react';
-import {Form,InputGroup,Button} from 'react-bootstrap'
+import {Form,InputGroup,Button,Container} from 'react-bootstrap'
 import Result from './Result'
+import Preview from './Preview'
+import './SearchByKeyword.css'
 
 const SearchByKeywords = () =>{
 
@@ -87,15 +89,31 @@ const SearchByKeywords = () =>{
                 </InputGroup>
             </Form>
 
-            {result.map( element=> (
-                <Result
-                    title = {element.title}
-                    image = {element.image}
-                    summary = {element.summary}
-                    instructions = {element.analyzedInstructions}
-                    ingredients = {element.extendedIngredients}
-                 />
-            ))}
+
+
+            <Container className="displayRecipes">
+                {result.map( element=> (
+                    // <Result
+                    //     title = {element.title}
+                    //     image = {element.image}
+                    //     summary = {element.summary}
+                    //     instructions = {element.analyzedInstructions}
+                    //     ingredients = {element.extendedIngredients}
+                    //  />
+                
+                    <Preview
+                        title = {element.title}
+                        image = {element.image}
+                        summary = {element.summary}
+                    />
+
+                
+                ))}
+
+
+
+            </Container>
+        
 
 
         </>
