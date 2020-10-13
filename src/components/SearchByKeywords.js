@@ -3,6 +3,7 @@ import {Form,InputGroup,Button,Container} from 'react-bootstrap'
 import Result from './Result'
 import Preview from './Preview'
 import './SearchByKeyword.css'
+import JSONres from '../res.js'
 
 const SearchByKeywords = () =>{
 
@@ -20,6 +21,7 @@ const SearchByKeywords = () =>{
 
 
     useEffect(()=>{
+        console.log(JSONres)
         console.log("here!")
         sendRequest();
     },[query]);
@@ -28,14 +30,14 @@ const SearchByKeywords = () =>{
     async function sendRequest(){
         console.log(query)
         if(query != "default"){
-            let URL = `https://api.spoonacular.com/recipes/search?apiKey=${API_KEY}&number=${10}&query=${query}`
-            let betterURL=`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&query=${query}&addRecipeInformation=${true}&fillIngredients=${true}`;
-            let result = await fetch(betterURL);
-            let data = await result.json();
+            // let URL = `https://api.spoonacular.com/recipes/search?apiKey=${API_KEY}&number=${10}&query=${query}`
+            // let betterURL=`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&query=${query}&addRecipeInformation=${true}&fillIngredients=${true}`;
+            // let result = await fetch(betterURL);
+            // let data = await result.json();
+            // console.log(betterURL);
+            // console.log(data);
 
-            console.log(data);
-
-            setResult(data.results);
+            // setResult(data.results);
 
 
             // fetch(url)
@@ -46,6 +48,19 @@ const SearchByKeywords = () =>{
             // fetch(url)
             // .then( (response) => {response.json()} )
             // .then( (data) => {console.log(data)} )
+
+
+
+
+
+
+
+
+            //test query:pasta
+            setResult(JSONres.results);
+
+
+
 
         }
 
@@ -105,6 +120,8 @@ const SearchByKeywords = () =>{
                         title = {element.title}
                         image = {element.image}
                         summary = {element.summary}
+                        instructions = {element.analyzedInstructions}
+                        ingredients = {element.extendedIngredients}
                     />
 
                 
