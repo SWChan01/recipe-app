@@ -1,11 +1,13 @@
 import React ,{useState,useEffect} from 'react';
 import {Form,InputGroup,Button,Container} from 'react-bootstrap'
-import Result from './Result'
 import Preview from './Preview'
 import './SearchByKeyword.css'
 import JSONres from '../res.js'
 
-const SearchByKeywords = () =>{
+
+
+
+const SearchByKeywords = ({queryMsg,doQuery}) =>{
 
 
 //GET example: 
@@ -29,7 +31,27 @@ const SearchByKeywords = () =>{
 
     async function sendRequest(){
         console.log(query)
-        if(query != "default"){
+        console.log(window.location.pathname);
+
+        let url =window.location.pathname
+        if(url !== "/searchByKeywords"){
+            let res = url.split("/searchByKeywords/");
+            setQuery(res[1]);
+
+            let betterURL=`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&query=${query}&addRecipeInformation=${true}&fillIngredients=${true}`;
+
+            let result = await fetch(betterURL);
+            let data = await result.json();
+            console.log(betterURL);
+            console.log(data);
+
+            setResult(data.results);
+
+
+
+        }
+
+        else if(query !== "default"){
             // let URL = `https://api.spoonacular.com/recipes/search?apiKey=${API_KEY}&number=${10}&query=${query}`
             // let betterURL=`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&query=${query}&addRecipeInformation=${true}&fillIngredients=${true}`;
             // let result = await fetch(betterURL);
@@ -97,25 +119,16 @@ const SearchByKeywords = () =>{
 
     return (
         <>
-            <Form onSubmit={handleSubmit}>
-                <InputGroup>
-                    <Form.Control type="text" onChange={(e) => {handleOnChange(e)}} placeholder="Search recipe by keywords"></Form.Control>
+
+            <form onSubmit={handleSubmit} className="search">
+                    <input type="text" className="searchInput" onChange={(e) => {handleOnChange(e)}} placeholder="Search recipe by keywords" />
                     <Button type="submit">Search</Button>
-                </InputGroup>
-            </Form>
+            </form>
 
 
 
             <Container className="displayRecipes">
                 {result.map( element=> (
-                    // <Result
-                    //     title = {element.title}
-                    //     image = {element.image}
-                    //     summary = {element.summary}
-                    //     instructions = {element.analyzedInstructions}
-                    //     ingredients = {element.extendedIngredients}
-                    //  />
-                
                     <Preview
                         title = {element.title}
                         image = {element.image}

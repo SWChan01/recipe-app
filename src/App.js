@@ -3,10 +3,7 @@ import './App.css';
 import Navagation from './components/Navagation'
 import { BrowserRouter as Router, Switch , Route } from 'react-router-dom'
 import SearchByKeywords from './components/SearchByKeywords'
-
-//GET example: 
-//https://api.spoonacular.com/recipes/complexSearch?query=pasta&maxFat=25&number=2
-
+import Cover from './components/Cover'
 
 
 const App = () => {
@@ -24,9 +21,9 @@ const App = () => {
         <Navagation />
         <Router>
             <Switch>
-                <Route exact path="/">
-                    <SearchByKeywords />
-                </Route>
+                <Route exact path="/" component={Cover}/>
+                <Route exact path="/searchByKeywords" component={SearchByKeywords}/>
+                <Route exact path="/searchByKeywords/:query" component={SearchByKeywords}/>
 
             </Switch>
         </Router>

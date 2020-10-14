@@ -47,36 +47,35 @@ const Preview = ({title,image,summary,ingredients,instructions}) =>{
                     onHide ={toggleModal}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>{title}</Modal.Title>
+                        <Modal.Title className="modalTitle">{title}</Modal.Title>
                     </Modal.Header>
 
-                    <ul>
-                        <li>Title: {title}</li>
-                        <li>Ingredients:
-                            <ul> 
-                                {ingredients.map(element=> (
-                                    <>
-                                        <li> name: {element.name} </li>
-                                        <li> amount: {element.amount} {element.unit} </li>
-                                        
-                                    </>
-                                
-                                
-                                
-                                ))}
-                            </ul>
-                        </li>
-                        <li>Summary: {showFullHTML(summary)}</li>
-                        <li>Instructions:
-                        <ol>
-                            {
-                                instructions.map(element => (element.steps.map(subElement=> <li> {subElement.step} </li> )))
-                            }
-                        </ol>
-                        </li>
-                        <li>Image: <img src={image}/>  </li>
+                    <Modal.Body>
+                        <ul>
+                            <li>Summary: {showFullHTML(summary)}</li>
+                            <li>Ingredients:
+                                <ul> 
+                                    {ingredients.map(element=> (
+                                        <>
+                                            <li>{element.amount} {element.unit} {element.name} </li>
+                                            
+                                        </>              
+                                    
+                                    ))}
+                                </ul>
+                            </li>
+                            <li>Instructions:
+                            <ol>
+                                {
+                                    instructions.map(element => (element.steps.map(subElement=> <li> {subElement.step} </li> )))
+                                }
+                            </ol>
+                            </li>
+                            <li>Image: <img src={image}/>  </li>
 
-                    </ul>
+                        </ul>
+
+                    </Modal.Body>
 
 
                     <Modal.Footer>

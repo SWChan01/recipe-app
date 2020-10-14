@@ -1,0 +1,15 @@
+.search{
+    position: absolute;
+    left: 25%;
+    top: 15%;
+
+}
+
+.searchInput{
+    width: 40vw;
+}
+
+.displayRecipes{
+    margin-top: 7vw;
+    margin-left: 15vw;
+}
