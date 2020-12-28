@@ -3,6 +3,7 @@ import './App.css';
 import Navagation from './components/Navagation'
 import { BrowserRouter as Router, Switch , Route } from 'react-router-dom'
 import SearchByKeywords from './components/SearchByKeywords'
+import AdvancedSearch from './components/AdvancedSearch'
 import Cover from './components/Cover'
 
 
@@ -24,7 +25,7 @@ const App = () => {
                 <Route exact path="/" component={Cover}/>
                 <Route exact path="/searchByKeywords" component={SearchByKeywords}/>
                 <Route exact path="/searchByKeywords/:query" component={SearchByKeywords}/>
-
+                <Route exact path="/advancedSearch" component={AdvancedSearch}/>
             </Switch>
         </Router>
     </>

@@ -20,6 +20,7 @@ const SearchByKeywords = ({queryMsg,doQuery}) =>{
     const [result,setResult] = useState([]);
     const [search,setSearch] = useState("");
     const [query,setQuery] = useState("default");
+    const [firstLoad,setFirstLoad] = useState(0);
 
 
     useEffect(()=>{
@@ -30,22 +31,23 @@ const SearchByKeywords = ({queryMsg,doQuery}) =>{
 
 
     async function sendRequest(){
-        console.log(query)
         console.log(window.location.pathname);
 
         let url =window.location.pathname
-        if(url !== "/searchByKeywords"){
+        if(url !== "/searchByKeywords" && !firstLoad){
             let res = url.split("/searchByKeywords/");
             setQuery(res[1]);
+            setSearch(res[1]);
 
             let betterURL=`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&query=${query}&addRecipeInformation=${true}&fillIngredients=${true}`;
-
+            console.log(betterURL);
             let result = await fetch(betterURL);
             let data = await result.json();
             console.log(betterURL);
             console.log(data);
 
             setResult(data.results);
+            setFirstLoad(1);
 
 
 
@@ -78,8 +80,19 @@ const SearchByKeywords = ({queryMsg,doQuery}) =>{
 
 
 
-            //test query:pasta
-            setResult(JSONres.results);
+            // //test query:pasta
+            // setResult(JSONres.results);
+
+
+            let betterURL=`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&query=${query}&addRecipeInformation=${true}&fillIngredients=${true}`;
+            console.log(betterURL);
+            let result = await fetch(betterURL);
+            let data = await result.json();
+            console.log(betterURL);
+            console.log(data);
+
+            setResult(data.results);
+            setFirstLoad(1);
 
 
 
@@ -93,7 +106,6 @@ const SearchByKeywords = ({queryMsg,doQuery}) =>{
 
 
     function handleSubmit(e){
-        console.log("i did not submit")
         e.preventDefault();
         console.log(search);
         setQuery(search);
@@ -102,8 +114,6 @@ const SearchByKeywords = ({queryMsg,doQuery}) =>{
     }   
 
     const handleOnChange = (e) =>{
-        console.log("this happened")
-        console.log(e.target.value)
         setSearch(e.target.value)
     }
 
@@ -121,7 +131,7 @@ const SearchByKeywords = ({queryMsg,doQuery}) =>{
         <>
 
             <form onSubmit={handleSubmit} className="search">
-                    <input type="text" className="searchInput" onChange={(e) => {handleOnChange(e)}} placeholder="Search recipe by keywords" />
+                    <input type="text" className="searchInput" onChange={(e) => {handleOnChange(e)}} placeholder="Search recipe by keywords" value={search} />
                     <Button type="submit">Search</Button>
             </form>
 
