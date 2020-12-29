@@ -60,11 +60,10 @@ class AdvancedSearch extends Component{
 
 
             dietOption: [
-                {id:36 , value: "High Protein" ,isChecked :false},
-                {id:37 , value: "High Carb" ,isChecked :false},
-                {id:38 , value: "Low Fat" ,isChecked :false},
-                {id:39 , value: "Vegan Friendly" ,isChecked :false},
-                {id:40 , value: "Low Cholesterol" ,isChecked :false},
+                {id:36 , value: "Vegetarian" ,isChecked :false},
+                {id:37 , value: "Vegan" ,isChecked :false},
+                {id:38 , value: "Gluten Free" ,isChecked :false},
+
 
 
 
@@ -89,7 +88,6 @@ class AdvancedSearch extends Component{
                 }
             })
 
-            this.setState({mealType:mealTypes});
 
 
 
@@ -106,7 +104,19 @@ class AdvancedSearch extends Component{
                 }
             })
 
-            this.setState({cuisine:cuisines});
+        }
+
+
+
+        this.handleDiet = (e) =>{
+            let diets = this.state.dietOption;
+
+            diets.forEach(element =>{
+                if(element.value === e.target.value){
+                    element.isChecked = e.target.checked;
+                    console.log(element.value+ " is " + element.isChecked);
+                }
+            })
         }
 
 
@@ -149,7 +159,7 @@ class AdvancedSearch extends Component{
 
 
             let API_KEY = process.env.REACT_APP_SPOONTACULAR_API_KEY;
-            let URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&addRecipeInformation=${true}&fillIngredients=${true}&cuisine=${cuisineQuery.toString()}&type=${mealTypeQuery.toString()}`;
+            let URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${10}&addRecipeInformation=${true}&fillIngredients=${true}&cuisine=${cuisineQuery.toString()}&type=${mealTypeQuery.toString()}&diet=${dietOptionQuery.toString()}`;
             console.log(URL);
             
             let result = await fetch(URL);
@@ -173,13 +183,6 @@ class AdvancedSearch extends Component{
 
 
     render() {
-    
-    
-
-
-
-
-
         return(
             <>
                 <form onSubmit = {this.handleSubmit}>  
@@ -223,13 +226,13 @@ class AdvancedSearch extends Component{
 
 
                     <div className="criteria">
-                        <h2>Select Diet Option</h2>
+                        <h2>Select Other Option</h2>
 
 
                         <div className ="dietType">
                             {
                                 this.state.dietOption.map((element) => {
-                                    return (<CheckBox handleClick = {this.handleCuisine} {...element} />)
+                                    return (<CheckBox handleClick = {this.handleDiet} {...element} />)
                                 })
                             }
                         </div>
